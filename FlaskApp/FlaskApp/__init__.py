@@ -63,7 +63,7 @@ def create_user():
 
 @app.route('/')
 def index():
-    first_name = 'anonymous'
+    #first_name = 'Peter'
     #if current_user.is_authenticated:
         #first_name = session['first_name']
     return render_template("index.html", loggedIn=current_user.is_authenticated)
@@ -100,7 +100,7 @@ def register():
 def demo():
 
     codes = request.args.get('location')
-    name = request.args.get('name')
+    name = request.args.get('firstname')
     sendText(name, "7177365578", codes, reportType=2)
 
     return "Sent text message!"

@@ -64,6 +64,8 @@ def get_history_values(LOC_KEY):
     minimum=min(temperature)
     maximum=max(temperature)
     normalize=[]
+    if(maximum==minimum):
+        maximum=maximum+1
     for each in temperature:
         norm= (each-minimum)/(maximum-minimum)
         normalize.append(norm)
@@ -78,9 +80,9 @@ def get_history_values(LOC_KEY):
     normalize=[]
     if(maximum==minimum):
         maximum=maximum+1
-        for each in visibility:
-            norm= (each-minimum)/(maximum-minimum)
-            normalize.append(norm)
+    for each in visibility:
+        norm= (each-minimum)/(maximum-minimum)
+        normalize.append(norm)
     #print (normalize)
     important[a[8]]=normalize
     #print(important)
@@ -90,6 +92,8 @@ def get_history_values(LOC_KEY):
     minimum=min(temperature)
     maximum=max(temperature)
     normalize=[]
+    if(maximum==minimum):
+        maximum=maximum+1
     for each in temperature:
         norm= (each-minimum)/(maximum-minimum)
         normalize.append(norm)
