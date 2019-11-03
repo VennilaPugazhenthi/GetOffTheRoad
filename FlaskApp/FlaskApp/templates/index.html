@@ -22,7 +22,7 @@ var formBasic = function () {
      }, function( data ) {
   var items = [];
   $.each( data, function( key, val ) {
-	  items.push( "<tr><th scope='row'>" + val.zip + "</th><td>" + val.city + ", " + val.state + "</td><td><a class='btn btn-outline-secondary' href='JavaScript:Void(0);' onclick='$.get( \"api/v1.0/get_drivability\", {location:\""+val.code+"\"}, function( data ) {alert(data);})' id='test"+val.code+"'>Check<br>Drivability</a></td><td><a class='btn btn-outline-secondary' href='JavaScript:Void(0);' onclick='$.get( \"api/v1.0/demo\", {location:\""+val.code+"\"}, function( data ) {alert(data);})' id='test"+val.code+"'>Sample Text<br>Message</a></td></tr>" );
+	  items.push( "<tr><th scope='row'>" + val.zip + "</th><td>" + val.city + ", " + val.state + "</td><td><a class='btn btn-outline-secondary' href='JavaScript:Void(0);' onclick='$.get( \"api/v1.0/get_drivability\", {loc_code:\""+val.code+"\"}, function( data ) {alert(data);})' id='test"+val.code+"'>Check<br>Drivability</a></td><td><a class='btn btn-outline-secondary' href='JavaScript:Void(0);' onclick='$.get( \"api/v1.0/demo\", {location:\""+val.code+"\"}, function( data ) {alert(data);})' id='test"+val.code+"'>Sample Text<br>Message</a></td></tr>" );
   });
   $('#searchtable').html(items.join(""));
 });
@@ -84,9 +84,9 @@ $("#searchbutton").on("click", function (e) {
       <td>A JSON array containing every matching location - includes the Location Code, State, City, and Zipcode</td>
     </tr>
     <tr>
-      <td><a href="api/v1.0/get_drivability?location=6789_PC">api/v1.0/get_drivability</a></td>
+      <td><a href="api/v1.0/get_drivability?loc_code=6789_PC">api/v1.0/get_drivability</a></td>
       <td>HTTP GET</td>
-      <td>location: {Location Code}</td>
+      <td>loc_code: {Location Code}</td>
       <td>A JSON object containing the drivability score and some relevant weather data</td>
     </tr>
 

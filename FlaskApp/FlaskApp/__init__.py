@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from FlaskApp.API import *
 import json
 import requests
 from flask import Flask, render_template, request
@@ -45,10 +46,10 @@ class CustomRegisterForm(RegisterForm):
     #    validators.Required(),
     #    validators.EqualTo('confirm', message='Passwords must match')])
     confirm = PasswordField('Repeat Password')
-    location_code = IntegerField('Zip Code', [validators.Length(min=5, max=5)])
+    location_code = IntegerField('Zip Code', [validators.NumberRange(min=4, max=6)])
     phone_number = StringField('Phone Number')
 
-    accept_tos = BooleanField('I accept the Terms of Service and Privacy Notice (updated Jan 22, 2015)', [validators.Required()])
+#    accept_tos = BooleanField('I accept the Terms of Service and Privacy Notice (updated Jan 22, 2015)', [validators.Required()])
                                 
 
 # Setup Flask-Security
@@ -77,6 +78,15 @@ def register():
                 login_user(hey)
                 return redirect('/')
     return render_template('security/register_user.html', form=form)
+
+@app.route('/api/v1.0/get_drivability', methods=['GET'])
+def get_drivability():
+
+    codes = request.args.get('loc_code')
+    
+
+    return str(get_history_values(codes))
+
 
 """
 @app.route('/register', methods=['GET','POST'])
@@ -123,9 +133,6 @@ def search():
         out.append(outresult)
     return json.dumps(out)
 
-@app.route('/api/v1.0/drivability', methods=['GET'])
-def get_tasks():
-    return "Today is a beautiful day. 10/10"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
