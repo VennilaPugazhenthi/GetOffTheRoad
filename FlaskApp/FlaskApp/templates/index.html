@@ -1,0 +1,153 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" /> <meta http-equiv="Pragma" content="no-cache" /> <meta http-equiv="Expires" content="0" />
+    <title>GetOffTheRoad - HackPSU Fall 2019</title>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static',filename='css/product.css') }}" rel="stylesheet">
+	<script>
+$(document).ready(function () {
+var formBasic = function () {
+  $('#searchtable').html("");
+  $.getJSON( "api/v1.0/search", {
+        location: $('#searchtext').val()
+     }, function( data ) {
+  var items = [];
+  $.each( data, function( key, val ) {
+	  items.push( "<tr><th scope='row'>" + val.zip + "</th><td>" + val.city + "</td><td>" + val.state + "</td><td><a class='btn btn-outline-secondary' href='JavaScript:Void(0);' onclick='$.get( \"api/v1.0/demo\", {location:\""+val.code+"\"}, function( data ) {alert(data);})' id='test"+val.code+"'>Demo</a></td></tr>" );
+  });
+  $('#searchtable').html(items.join(""));
+});
+};
+
+$("#searchbutton").on("click", function (e) {
+  e.preventDefault();
+  formBasic();
+});
+});
+
+	</script>
+  </head>
+
+  <body>
+
+    <nav class="site-header sticky-top py-1">
+      <div class="container d-flex flex-column flex-md-row justify-content-between">
+        <a class="py-2 d-none d-md-inline-block" href="https://hackpsu-fall-2019.devpost.com/">HackPSU Fall 2019</a>
+        <a class="py-2 d-none d-md-inline-block" href="https://github.com/VennilaPugazhenthi/GetOffTheRoad">Github</a>
+        <a class="py-2 d-none d-md-inline-block" href="#subscribe">Subscribe</a>
+        <a class="py-2 d-none d-md-inline-block" href="#demo">Demo</a>
+{% if loggedIn %}
+        <a class="py-2 d-none d-md-inline-block" href="logout">Logout</a>
+{% else %}
+        <a class="py-2 d-none d-md-inline-block" href="register">Register</a>
+        <a class="py-2 d-none d-md-inline-block" href="login">Login</a>
+{% endif %}
+      </div>
+    </nav>
+
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+      <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <h1 class="display-4 font-weight-normal">GetOffTheRoad</h1>
+        <p class="lead font-weight-normal">Just get off the road!</p>
+        <a class="btn btn-outline-secondary" href="#">Button</a>
+      </div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+	<a name="subscribe"><div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        <div class="my-3 py-3">
+          <h2 class="display-5">Subscribe</h2>
+          <p class="lead">This app does things</p>
+        </div>
+        <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+      </div></a>
+      <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+	  <a name="demo"><div class="my-3 p-3">
+          <h2 class="display-5">Demo</h2>
+          <p class="lead">Enter any location to recieve a drivability notification!</p>
+	  <input id="searchtext" class="form-control" type="text" placeholder="Enter a Location" aria-label="Search">
+	  <br/>
+	  <a id="searchbutton" class="btn btn-outline-secondary" href="#">Button</a>
+          </div></a>
+	<table class="table bg-light">
+  <thead>
+    <tr>
+      <th scope="col">Zipcode</th>
+      <th scope="col">City</th>
+      <th scope="col">State</th>
+      <th scope="col"> </th>
+    </tr>
+  </thead>
+  <tbody id="searchtable">
+  </tbody>
+</table>
+        <!--div class="bg-dark box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div-->
+      </div>
+    </div>
+
+    <footer class="container py-5">
+      <div class="row">
+        <div class="col-12 col-md">
+        </div>
+        <div class="col-6 col-md">
+          <h5>Features</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Cool stuff</a></li>
+            <li><a class="text-muted" href="#">Random feature</a></li>
+            <li><a class="text-muted" href="#">Team feature</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md">
+          <h5>Resources</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Resource</a></li>
+            <li><a class="text-muted" href="#">Resource name</a></li>
+            <li><a class="text-muted" href="#">Another resource</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md">
+          <h5>Resources</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Business</a></li>
+            <li><a class="text-muted" href="#">Education</a></li>
+            <li><a class="text-muted" href="#">Government</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md">
+          <h5>About</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Team</a></li>
+            <li><a class="text-muted" href="#">Privacy</a></li>
+            <li><a class="text-muted" href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="{{ url_for('static',filename='js/vendor/popper.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/vendor/holder.min.js') }}"></script>
+    <script>
+      Holder.addTheme('thumb', {
+        bg: '#55595c',
+        fg: '#eceeef',
+        text: 'Thumbnail'
+      });
+    </script>
+  </body>
+</html>
+
