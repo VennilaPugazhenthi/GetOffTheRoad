@@ -22,7 +22,7 @@ var formBasic = function () {
      }, function( data ) {
   var items = [];
   $.each( data, function( key, val ) {
-	  items.push( "<tr><th scope='row'>" + val.zip + "</th><td>" + val.city + ", " + val.state + "</td><td><a class='btn btn-outline-secondary' href='JavaScript:Void(0);' onclick='$.get( \"api/v1.0/get_drivability\", {loc_code:\""+val.code+"\"}, function( data ) {alert(data);})' id='test"+val.code+"'>Check<br>Drivability</a></td><td><a class='btn btn-outline-secondary' href='JavaScript:Void(0);' onclick='$.get( \"api/v1.0/demo\", {location:\""+val.code+"\"}, function( data ) {alert(data);})' id='test"+val.code+"'>Sample Text<br>Message</a></td></tr>" );
+	  items.push( "<tr><th scope='row'>" + val.zip + "</th><td>" + val.city + ", " + val.state + "</td><td><a class='btn btn-outline-secondary' href='JavaScript:Void(0);' onclick='$.get( \"api/v1.0/get_drivability\", {loc_code:\""+val.code+"\"}, function( data ) {alert(data);})' id='test"+val.code+"'>Check<br>Drivability</a></td><td><a class='btn btn-outline-secondary' href='JavaScript:Void(0);' onclick='$.get( \"api/v1.0/demo\", {name:\"Chandler\", location:\""+val.code+"\"}, function( data ) {alert(data);})' id='test"+val.code+"'>Sample Text<br>Message</a></td></tr>" );
   });
   $('#searchtable').html(items.join(""));
 });

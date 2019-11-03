@@ -3,7 +3,7 @@
 from FlaskApp.API import *
 import json
 import requests
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from flask_login import current_user
 from flask_mongoengine import MongoEngine
 from wtforms import Form, BooleanField, TextField, PasswordField, IntegerField, StringField, validators
@@ -63,6 +63,9 @@ def create_user():
 
 @app.route('/')
 def index():
+    first_name = 'anonymous'
+    #if current_user.is_authenticated:
+        #first_name = session['first_name']
     return render_template("index.html", loggedIn=current_user.is_authenticated)
 
 
@@ -97,9 +100,10 @@ def register():
 def demo():
 
     codes = request.args.get('location')
-    
+    name = request.args.get('name')
+    sendText(name, "7177365578", codes, reportType=2)
 
-    return "Load" + str(codes)
+    return "Sent text message!"
 
 
 @app.route('/api/v1.0/search', methods=['GET'])
