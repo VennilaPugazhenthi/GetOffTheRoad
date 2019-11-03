@@ -161,3 +161,24 @@ def get_history_values():
         normalize.append(norm)
     #print (normalize)
     important[a[11]]=normalize
+    
+    for elements in important:
+        list_element=(important[elements])
+        count=len(list_element)
+        if(count==0):
+            count=1
+        sum=0
+        for ele in list_element:
+            sum=sum+ele
+            
+        avg=sum/count
+        important[elements]=avg
+    #print(important)
+    threshold=0
+    for elements in important:
+        num=important[elements]
+        weight=0.33
+        threshold=threshold+weight*num
+    threshold=threshold*33
+    
+    return threshold
