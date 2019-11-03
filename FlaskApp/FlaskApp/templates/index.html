@@ -22,7 +22,7 @@ var formBasic = function () {
      }, function( data ) {
   var items = [];
   $.each( data, function( key, val ) {
-	  items.push( "<tr><th scope='row'>" + val.zip + "</th><td>" + val.city + "</td><td>" + val.state + "</td><td><a class='btn btn-outline-secondary' href='JavaScript:Void(0);' onclick='$.get( \"api/v1.0/demo\", {location:\""+val.code+"\"}, function( data ) {alert(data);})' id='test"+val.code+"'>Demo</a></td></tr>" );
+	  items.push( "<tr><th scope='row'>" + val.zip + "</th><td>" + val.city + ", " + val.state + "</td><td><a class='btn btn-outline-secondary' href='JavaScript:Void(0);' onclick='$.get( \"api/v1.0/get_drivability\", {location:\""+val.code+"\"}, function( data ) {alert(data);})' id='test"+val.code+"'>Check<br>Drivability</a></td><td><a class='btn btn-outline-secondary' href='JavaScript:Void(0);' onclick='$.get( \"api/v1.0/demo\", {location:\""+val.code+"\"}, function( data ) {alert(data);})' id='test"+val.code+"'>Sample Text<br>Message</a></td></tr>" );
   });
   $('#searchtable').html(items.join(""));
 });
@@ -43,7 +43,7 @@ $("#searchbutton").on("click", function (e) {
       <div class="container d-flex flex-column flex-md-row justify-content-between">
         <a class="py-2 d-none d-md-inline-block" href="https://hackpsu-fall-2019.devpost.com/">HackPSU Fall 2019</a>
         <a class="py-2 d-none d-md-inline-block" href="https://github.com/VennilaPugazhenthi/GetOffTheRoad">Github</a>
-        <a class="py-2 d-none d-md-inline-block" href="#subscribe">Subscribe</a>
+        <a class="py-2 d-none d-md-inline-block" href="#api">API Docs</a>
         <a class="py-2 d-none d-md-inline-block" href="#demo">Demo</a>
 {% if loggedIn %}
         <a class="py-2 d-none d-md-inline-block" href="logout">Logout</a>
@@ -57,18 +57,42 @@ $("#searchbutton").on("click", function (e) {
     <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
       <div class="col-md-5 p-lg-5 mx-auto my-5">
         <h1 class="display-4 font-weight-normal">GetOffTheRoad</h1>
-        <p class="lead font-weight-normal">Just get off the road!</p>
-        <a class="btn btn-outline-secondary" href="#">Button</a>
+        <p class="lead font-weight-normal">GetOffTheRoad is a public API for predicting the 'drivability' of a user's commute.
+	This webpage demonstrates the API by delivering a daily text message to a subscriber who signs up using their phone number and city.</p>
       </div>
     </div>
 
     <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-	<a name="subscribe"><div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+	<a name="api"><div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
         <div class="my-3 py-3">
-          <h2 class="display-5">Subscribe</h2>
-          <p class="lead">This app does things</p>
+          <h2 class="display-5">API</h2>
+          <p class="lead">GetOffTheRoad provides the following REST API calls:</p>
+	  <table class="table bg-light">
+  <thead>
+    <tr>
+      <th scope="col">Call</th>
+      <th scope="col">Type</th>
+      <th scope="col">Parameters</th>
+      <th scope="col">Returns</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="api/v1.0/search?location=Nome">api/v1.0/search</a></td>
+      <td>HTTP GET</td>
+      <td>location: {Search string}</td>
+      <td>A JSON array containing every matching location - includes the Location Code, State, City, and Zipcode</td>
+    </tr>
+    <tr>
+      <td><a href="api/v1.0/get_drivability?location=6789_PC">api/v1.0/get_drivability</a></td>
+      <td>HTTP GET</td>
+      <td>location: {Location Code}</td>
+      <td>A JSON object containing the drivability score and some relevant weather data</td>
+    </tr>
+
+  </tbody>
+	  </table>
         </div>
-        <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
       </div></a>
       <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
 	  <a name="demo"><div class="my-3 p-3">
@@ -76,14 +100,14 @@ $("#searchbutton").on("click", function (e) {
           <p class="lead">Enter any location to recieve a drivability notification!</p>
 	  <input id="searchtext" class="form-control" type="text" placeholder="Enter a Location" aria-label="Search">
 	  <br/>
-	  <a id="searchbutton" class="btn btn-outline-secondary" href="#">Button</a>
+	  <a id="searchbutton" class="btn btn-outline-secondary" href="#">Search</a>
           </div></a>
 	<table class="table bg-light">
   <thead>
     <tr>
       <th scope="col">Zipcode</th>
       <th scope="col">City</th>
-      <th scope="col">State</th>
+      <th scope="col"> </th>
       <th scope="col"> </th>
     </tr>
   </thead>

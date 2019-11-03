@@ -29,21 +29,21 @@ class Role(db.Document, RoleMixin):
     description = db.StringField(max_length=255)
 
 class User(db.Document, UserMixin):
-    first_name = db.StringField(max_length=255)
     email = db.StringField(max_length=255)
     password = db.StringField(max_length=255)
+    first_name = db.StringField(max_length=254)
     location_code = db.IntField()
     phone_number = db.IntField(min_length=10, max_length=10)
     active = db.BooleanField(default=True)
     confirmed_at = db.DateTimeField()
     roles = db.ListField(db.ReferenceField(Role), default=[])
 
-class CustomRegisterForm():
+class CustomRegisterForm(RegisterForm):
     first_name = TextField('First Name', [validators.Length(min=4, max=20)])
-    email = TextField('Email Address', [validators.Length(min=6, max=50)])
-    password = PasswordField('New Password', [
-        validators.Required(),
-        validators.EqualTo('confirm', message='Passwords must match')])
+    #email = TextField('Email Address', [validators.Length(min=6, max=50)])
+    #password = PasswordField('New Password', [
+    #    validators.Required(),
+    #    validators.EqualTo('confirm', message='Passwords must match')])
     confirm = PasswordField('Repeat Password')
     location_code = IntegerField('Zip Code', [validators.Length(min=5, max=5)])
     phone_number = StringField('Phone Number')
@@ -53,7 +53,7 @@ class CustomRegisterForm():
 
 # Setup Flask-Security
 user_datastore = MongoEngineUserDatastore(db, User, Role)
-security = Security(app, user_datastore)
+security = Security(app, user_datastore, register_form=CustomRegisterForm)
 
 # Create a user to test with
 @app.before_first_request
@@ -64,7 +64,7 @@ def create_user():
 def index():
     return render_template("index.html", loggedIn=current_user.is_authenticated)
 
-"""
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = CustomRegisterForm()
@@ -76,13 +76,13 @@ def register():
                 hey = User(form.first_name.data, form.email.data, hashpass, form.location_code.data, form.phone_number.data).save()
                 login_user(hey)
                 return redirect('/')
-    return render_template('register.html', form=form)
-"""
+    return render_template('security/register_user.html', form=form)
 
+"""
 @app.route('/register', methods=['GET','POST'])
 def register():
     return render_template('security/register_user.html')
-
+"""
 @app.route('/api/v1.0/demo', methods=['GET'])
 def demo():
 
